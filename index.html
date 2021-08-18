@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ボウリングBINGO</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>ボウリングBINGO</h2>
+        <h4>BINGOカード</h4>
+        <div id="result"></div>
+        <button class="botton" id="normal">普通のBINGO</button><br><br>
+        <button class="botton" id="num">倒した数BINGO</button><br><br>
+        <button class="botton" id="score">ボウリング調整のBINGO</button>
+    </div>
+
+
+    <script>
+        //DOMの取得
+        var normal = document.getElementById('normal');
+        var num = document.getElementById('num');
+        var score = document.getElementById('score');
+        //一致しているか確かめる関数
+        function match(num, bingo) {
+            var i;
+            for (i = 0; i < bingo.length; i++) {
+                if (num == bingo[i]) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+        //'B','I','N','G','O'の初期化
+        function bingo_init(array) {
+            array[0] = 'B';
+            array[1] = 'I';
+            array[2] = 'N';
+            array[3] = 'G';
+            array[4] = 'O';
+        }
+        //乱数配列生成normal:0,score:1
+        function bingo_ran(array, key) {
+            var divide = [15, 20];
+            for (i = 0; i < 5; i++) {
+                for (j = 0; j < 5; j++) {
+                    bingo_num = Math.floor((Math.random() * 1000) % divide[key]) + 1 + j * divide[key];
+                    while (match(bingo_num, bingo) === 1) {
+                        bingo_num = Math.floor((Math.random() * 1000) % divide[key]) + 1 + j * divide[key];
+                    }
+                    bingo.push(bingo_num);
+                }
+            }
+            bingo[17] = '●';
+        }
+        //BINGOの配列
+        var i, j;
+        var bingo = [];
+        var bingo_num
+        var result = document.getElementById('result');
+        //normal イベントのバインド
+        normal.addEventListener('click', function () {
+            bingo_init(bingo)
+            bingo_ran(bingo, 0);
+            var tbl = document.createElement("table");
+            var tblBody = document.createElement("tbody");
+            for (i = 0; i < 6; i++) {
+                var row = document.createElement("tr");
+                for (j = 0; j < 5; j++) {
+                    var cell = document.createElement("td");
+                    var cellText = document.createTextNode(bingo[i * 5 + j]);
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                }
+                tblBody.appendChild(row);
+            }
+            tbl.appendChild(tblBody);
+            result.appendChild(tbl);
+            tbl.setAttribute("border", "1");
+        });
+        //num イベントのバインド
+        num.addEventListener('click', function () {
+
+            for (i = 0; i < 5; i++) {
+                var five = [];
+                for (j = 0; j < 5; j++) {
+                    bingo_num = Math.floor((Math.random() * 1000) % 10) + 1;
+                    while (match(bingo_num, five) === 1) {
+                        bingo_num = Math.floor((Math.random() * 1000) % 10) + 1;
+                    }
+                    bingo.push(bingo_num);
+                    five.push(bingo_num);
+                }
+            }
+            bingo[12] = '●';
+            var tbl = document.createElement("table");
+            var tblBody = document.createElement("tbody");
+            for (i = 0; i < 6; i++) {
+                var row = document.createElement("tr");
+                if (i === 0) {
+                    var cell = document.createElement("td");
+                    var cellText = document.createTextNode('B');
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                    var cell = document.createElement("td");
+                    var cellText = document.createTextNode('I');
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                    var cell = document.createElement("td");
+                    var cellText = document.createTextNode('N');
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                    var cell = document.createElement("td");
+                    var cellText = document.createTextNode('G');
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                    var cell = document.createElement("td");
+                    var cellText = document.createTextNode('O');
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                }
+                else {
+                    for (j = 0; j < 5; j++) {
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(bingo[j * 5 + i - 1]);
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                    }
+                }
+                tblBody.appendChild(row);
+            }
+            tbl.appendChild(tblBody);
+            result.appendChild(tbl);
+            tbl.setAttribute("border", "1");
+        });
+        //score イベントのバインド
+        score.addEventListener('click', function () {
+            bingo_init(bingo)
+            bingo_ran(bingo, 1);
+            var tbl = document.createElement("table");
+            var tblBody = document.createElement("tbody");
+            for (i = 0; i < 6; i++) {
+                var row = document.createElement("tr");
+                for (j = 0; j < 5; j++) {
+                    var cell = document.createElement("td");
+                    var cellText = document.createTextNode(bingo[i * 5 + j]);
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                }
+                tblBody.appendChild(row);
+            }
+            tbl.appendChild(tblBody);
+            result.appendChild(tbl);
+            tbl.setAttribute("border", "1");
+        });
+    </script>
+</body>
+
+</html>
