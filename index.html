@@ -11,17 +11,18 @@
         <h2>ボウリングBINGO</h2>
         <h4>BINGOカード</h4>
         <div id="result"></div>
-        <button class="botton" id="normal">普通のBINGO</button><br><br>
-        <button class="botton" id="num">倒した数BINGO</button><br><br>
-        <button class="botton" id="score">ボウリング調整のBINGO</button>
+        <div id="buttons">
+            <button class="button" id="normal">普通のBINGO</button><br><br>
+            <button class="button" id="num">倒した数BINGO</button><br><br>
+            <button class="button" id="score">ボウリング調整のBINGO</button>
+        </div>
     </div>
-
-
     <script>
         //DOMの取得
         var normal = document.getElementById('normal');
         var num = document.getElementById('num');
         var score = document.getElementById('score');
+        var buttons = document.getElementById('buttons');
         //一致しているか確かめる関数
         function match(num, bingo) {
             var i;
@@ -41,7 +42,7 @@
             array[4] = 'O';
         }
         //乱数配列生成normal:0,score:1
-        function bingo_ran(array, key) {
+        function bingo_create(array, key) {
             var divide = [15, 20];
             for (i = 0; i < 5; i++) {
                 for (j = 0; j < 5; j++) {
@@ -54,6 +55,12 @@
             }
             bingo[17] = '●';
         }
+        //buttonの削除
+        function button_remove() {
+            buttons.removeChild(normal);
+            buttons.removeChild(num);
+            buttons.removeChild(score);
+        }
         //BINGOの配列
         var i, j;
         var bingo = [];
@@ -62,7 +69,7 @@
         //normal イベントのバインド
         normal.addEventListener('click', function () {
             bingo_init(bingo)
-            bingo_ran(bingo, 0);
+            bingo_create(bingo, 0);
             var tbl = document.createElement("table");
             var tblBody = document.createElement("tbody");
             for (i = 0; i < 6; i++) {
@@ -78,10 +85,10 @@
             tbl.appendChild(tblBody);
             result.appendChild(tbl);
             tbl.setAttribute("border", "1");
+            button_remove()
         });
         //num イベントのバインド
         num.addEventListener('click', function () {
-
             for (i = 0; i < 5; i++) {
                 var five = [];
                 for (j = 0; j < 5; j++) {
@@ -100,23 +107,23 @@
                 var row = document.createElement("tr");
                 if (i === 0) {
                     var cell = document.createElement("td");
-                    var cellText = document.createTextNode('B');
+                    var cellText = document.createTextNode("B(1,6)");
                     cell.appendChild(cellText);
                     row.appendChild(cell);
                     var cell = document.createElement("td");
-                    var cellText = document.createTextNode('I');
+                    var cellText = document.createTextNode("I(2,7)");
                     cell.appendChild(cellText);
                     row.appendChild(cell);
                     var cell = document.createElement("td");
-                    var cellText = document.createTextNode('N');
+                    var cellText = document.createTextNode("N(3,8)");
                     cell.appendChild(cellText);
                     row.appendChild(cell);
                     var cell = document.createElement("td");
-                    var cellText = document.createTextNode('G');
+                    var cellText = document.createTextNode("G(4,9)");
                     cell.appendChild(cellText);
                     row.appendChild(cell);
                     var cell = document.createElement("td");
-                    var cellText = document.createTextNode('O');
+                    var cellText = document.createTextNode("O(5,10)");
                     cell.appendChild(cellText);
                     row.appendChild(cell);
                 }
@@ -133,11 +140,12 @@
             tbl.appendChild(tblBody);
             result.appendChild(tbl);
             tbl.setAttribute("border", "1");
+            button_remove()
         });
         //score イベントのバインド
         score.addEventListener('click', function () {
             bingo_init(bingo)
-            bingo_ran(bingo, 1);
+            bingo_create(bingo, 1);
             var tbl = document.createElement("table");
             var tblBody = document.createElement("tbody");
             for (i = 0; i < 6; i++) {
@@ -153,6 +161,7 @@
             tbl.appendChild(tblBody);
             result.appendChild(tbl);
             tbl.setAttribute("border", "1");
+            button_remove()
         });
     </script>
 </body>
