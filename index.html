@@ -66,6 +66,7 @@
                 }
             }
             bingo[17] = '●';
+            bingo_num = 0;
         }
         //buttonの削除
         function button_remove() {
@@ -73,48 +74,110 @@
             buttons.removeChild(num);
             buttons.removeChild(score);
         }
+        //BINGO表作成
+        function bingo_make() {
+            var tbl = document.createElement("table");
+            var tblBody = document.createElement("tbody");
+            if (kind === 0) {
+                for (i = 0; i < 6; i++) {
+                    var row = document.createElement("tr");
+                    if (i === 0) {
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode("B(1,6)");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode("I(2,7)");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode("N(3,8)");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode("G(4,9)");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode("O(5,10)");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                    }
+                    else {
+                        for (j = 0; j < 5; j++) {
+                            var cell = document.createElement("td");
+                            var cellText = document.createTextNode(bingo[j * 5 + i - 1]);
+                            cell.appendChild(cellText);
+                            row.appendChild(cell);
+                        }
+                    }
+                    tblBody.appendChild(row);
+                }
+            }
+            else {
+                for (i = 0; i < 6; i++) {
+                    var row = document.createElement("tr");
+                    for (j = 0; j < 5; j++) {
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(bingo[i * 5 + j]);
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                    }
+                    tblBody.appendChild(row);
+                }
+            }
+            tbl.appendChild(tblBody);
+            result.appendChild(tbl);
+            tbl.setAttribute("border", "1");
+            tbl.setAttribute("id", "bingo_table");
+        }
         // getnum()倒した数BINGO
         function process_num() {
             var number = repeat / 2;
-            number = numver % 5;
+            number = (number - 1) % 5;
             for (i = 0; i < 5; i++) {
                 if (bingo[i + 5 * number] === bingo_num) {
-                    bingo[i + 5 * number] = '●';
-
+                    bingo[i + (5 * number)] = '●';
                 }
             }
+            result.removeChild(bingo_table);
+            bingo_make();
+            bingo_num = 0;
         }
         //getnum()普通とボウリング調整BINGO
         function process_normal_score() {
-
+            for (i = 5; i < 30; i++) {
+                if (bingo[i] === bingo_num) {
+                    bingo[i] = '●';
+                }
+            }
+            result.removeChild(bingo_table);
+            bingo_make();
         }
         //数字を入力されたとき
         function getnum() {
-            var num = input_num.value;
             if (repeat % 2 == 0) {
+                bingo_num = parseInt(bingo_num) + parseInt(input_num.value);
                 if (kind == 0) {
                     process_num();
                 }
                 else {
                     process_normal_score();
                 }
-                bingo_num = 0;
+
             }
             else {
-                bingo_num = input_num.value;
+                if (kind === 0) {
+                    bingo_num = input_num.value;
+                }
+                else {
+                    bingo_num = parseInt(bingo_num) + parseInt(input_num.value);
+                }
             }
             repeat++;
             input_num.value = null;
         }
-        //BINGO表作成
-        function bingo_make() {
-            if (key === 0) {
 
-            }
-            else {
-
-            }
-        }
         //input作成
         function input_make(key) {
             input_num.setAttribute("type", "number");
@@ -143,23 +206,9 @@
             bingo_init(bingo)
             bingo_create(bingo, 0);
             kind = 1;
-            var tbl = document.createElement("table");
-            var tblBody = document.createElement("tbody");
-            for (i = 0; i < 6; i++) {
-                var row = document.createElement("tr");
-                for (j = 0; j < 5; j++) {
-                    var cell = document.createElement("td");
-                    var cellText = document.createTextNode(bingo[i * 5 + j]);
-                    cell.appendChild(cellText);
-                    row.appendChild(cell);
-                }
-                tblBody.appendChild(row);
-            }
-            tbl.appendChild(tblBody);
-            result.appendChild(tbl);
-            tbl.setAttribute("border", "1");
             button_remove();
             input_make(0);
+            bingo_make();
         });
         //num イベントのバインド
         num.addEventListener('click', function () {
@@ -176,70 +225,18 @@
                 }
             }
             bingo[12] = '●';
-            var tbl = document.createElement("table");
-            var tblBody = document.createElement("tbody");
-            for (i = 0; i < 6; i++) {
-                var row = document.createElement("tr");
-                if (i === 0) {
-                    var cell = document.createElement("td");
-                    var cellText = document.createTextNode("B(1,6)");
-                    cell.appendChild(cellText);
-                    row.appendChild(cell);
-                    var cell = document.createElement("td");
-                    var cellText = document.createTextNode("I(2,7)");
-                    cell.appendChild(cellText);
-                    row.appendChild(cell);
-                    var cell = document.createElement("td");
-                    var cellText = document.createTextNode("N(3,8)");
-                    cell.appendChild(cellText);
-                    row.appendChild(cell);
-                    var cell = document.createElement("td");
-                    var cellText = document.createTextNode("G(4,9)");
-                    cell.appendChild(cellText);
-                    row.appendChild(cell);
-                    var cell = document.createElement("td");
-                    var cellText = document.createTextNode("O(5,10)");
-                    cell.appendChild(cellText);
-                    row.appendChild(cell);
-                }
-                else {
-                    for (j = 0; j < 5; j++) {
-                        var cell = document.createElement("td");
-                        var cellText = document.createTextNode(bingo[j * 5 + i - 1]);
-                        cell.appendChild(cellText);
-                        row.appendChild(cell);
-                    }
-                }
-                tblBody.appendChild(row);
-            }
-            tbl.appendChild(tblBody);
-            result.appendChild(tbl);
-            tbl.setAttribute("border", "1");
             button_remove();
             input_make(1);
+            bingo_make();
         });
         //score イベントのバインド
         score.addEventListener('click', function () {
             bingo_init(bingo)
             bingo_create(bingo, 1);
             kind = 2;
-            var tbl = document.createElement("table");
-            var tblBody = document.createElement("tbody");
-            for (i = 0; i < 6; i++) {
-                var row = document.createElement("tr");
-                for (j = 0; j < 5; j++) {
-                    var cell = document.createElement("td");
-                    var cellText = document.createTextNode(bingo[i * 5 + j]);
-                    cell.appendChild(cellText);
-                    row.appendChild(cell);
-                }
-                tblBody.appendChild(row);
-            }
-            tbl.appendChild(tblBody);
-            result.appendChild(tbl);
-            tbl.setAttribute("border", "1");
             button_remove();
             input_make(0);
+            bingo_make();
         });
     </script>
 </body>
