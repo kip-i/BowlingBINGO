@@ -32,10 +32,9 @@
         //BINGOの配列
         var i, j;
         var bingo = [];
-        var bingo_num;
-        var kind; //BINGOの種類
+        var bingo_num;//作成時の数と１回目の倒したピンの数
+        var kind; //BINGOの種類 num:0 normal:1 score:2
         var repeat = 1; //投げた回数
-        var half; //１回目の得点
         //一致しているか確かめる関数
         function match(num, bingo) {
             var i;
@@ -76,7 +75,14 @@
         }
         // getnum()倒した数BINGO
         function process_num() {
+            var number = repeat / 2;
+            number = numver % 5;
+            for (i = 0; i < 5; i++) {
+                if (bingo[i + 5 * number] === bingo_num) {
+                    bingo[i + 5 * number] = '●';
 
+                }
+            }
         }
         //getnum()普通とボウリング調整BINGO
         function process_normal_score() {
@@ -92,14 +98,23 @@
                 else {
                     process_normal_score();
                 }
-                half = 0;
+                bingo_num = 0;
             }
             else {
-                half = input_num.value;
+                bingo_num = input_num.value;
             }
             repeat++;
+            input_num.value = null;
         }
+        //BINGO表作成
+        function bingo_make() {
+            if (key === 0) {
 
+            }
+            else {
+
+            }
+        }
         //input作成
         function input_make(key) {
             input_num.setAttribute("type", "number");
