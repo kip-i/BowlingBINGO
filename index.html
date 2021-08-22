@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ボウリングBINGO</title>
+    <title> &#x1f3b3; ボウリングBINGO</title>
 </head>
 
 <body>
     <div class="container">
-        <h2>ボウリングBINGO</h2>
-        <h4>BINGOカード</h4>
+        <h2>&#x1f3b3;ボウリングBINGO</h2>
+        <h4 id="card">BINGOカード</h4>
         <div id="result"></div>
         <div id="pointboard"></div>
         <div id="buttons">
@@ -29,6 +29,7 @@
         var input_button = document.createElement("input");
         var input_num = document.createElement("input");
         var attention = document.getElementById("attention");
+        var card = document.getElementById('card');
         //BINGOの配列
         var i, j;
         var bingo = [];
@@ -187,15 +188,7 @@
             input_button.setAttribute("onclick", "getnum()");
             input_button.setAttribute("id", "decision");
             var p = document.createElement("p");
-            var txt;
-            if (key == 0) {
-                txt = document.createTextNode("得点を入力してください.");
-                p.appendChild(txt);
-            }
-            else {
-                txt = document.createTextNode("倒した本数を入力してください.");
-                p.appendChild(txt);
-            }
+            var txt = document.createTextNode("倒した本数を入力してください.");
             form.appendChild(input_num);
             form.appendChild(input_button);
             result.appendChild(p);
@@ -209,6 +202,7 @@
             button_remove();
             input_make(0);
             bingo_make();
+            card.textContent = '普通のBINGOカード';
         });
         //num イベントのバインド
         num.addEventListener('click', function () {
@@ -228,6 +222,7 @@
             button_remove();
             input_make(1);
             bingo_make();
+            card.textContent = '倒した数のBINGOカード';
         });
         //score イベントのバインド
         score.addEventListener('click', function () {
@@ -237,6 +232,7 @@
             button_remove();
             input_make(0);
             bingo_make();
+            card.textContent = 'ボウリング調整のBINGO';
         });
     </script>
 </body>
