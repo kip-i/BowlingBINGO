@@ -30,13 +30,17 @@
         var input_num = document.createElement("input");
         var attention = document.getElementById("attention");
         var card = document.getElementById('card');
+        var p = document.createElement('p');
+        var pointboard = document
+
         //BINGOの配列
         var i, j;
         var bingo = [];
         var bingo_num;//作成時の数と１回目の倒したピンの数
         var kind; //BINGOの種類 num:0 normal:1 score:2
-        var repeat = 1; //投げた回数
-        //一致しているか確かめる関数
+        var repeat = 0; //プレイヤー数を入力したら1になる.その後投げた回数
+        var player_num; //プレイヤー数
+        //すでに出ているか確かめる関数
         function match(num, bingo) {
             var i;
             for (i = 0; i < bingo.length; i++) {
@@ -155,24 +159,46 @@
             result.removeChild(bingo_table);
             bingo_make();
         }
+        //ポイントボードの作成
+        function pointboard_make() {
+            for (i = 0; i < player_num; i++) {
+                for (j = 0; j < 3; j++) {
+                    var tbl = document.createElement("table");
+                    var tblBody = document.createElement("tbody");
+                }
+            }
+        }
         //数字を入力されたとき
         function getnum() {
-            if (repeat % 2 == 0) {
-                bingo_num = parseInt(bingo_num) + parseInt(input_num.value);
-                if (kind == 0) {
-                    process_num();
+            if (repeat === 0) {
+
+                if (input_num.value < 1) {
+                    p.innerHTML = '...つまんな.スコア表なしでやっとけ';
+                    player_num = 0;
                 }
                 else {
-                    process_normal_score();
+                    p.innerHTML = '倒した本数を入力してください.';
+                    player_num = input_num.value;
                 }
 
             }
             else {
-                if (kind === 0) {
-                    bingo_num = input_num.value;
+                if (repeat % 2 == 0) {
+                    bingo_num = parseInt(bingo_num) + parseInt(input_num.value);
+                    if (kind == 0) {
+                        process_num();
+                    }
+                    else {
+                        process_normal_score();
+                    }
                 }
                 else {
-                    bingo_num = parseInt(bingo_num) + parseInt(input_num.value);
+                    if (kind === 0) {
+                        bingo_num = input_num.value;
+                    }
+                    else {
+                        bingo_num = parseInt(bingo_num) + parseInt(input_num.value);
+                    }
                 }
             }
             repeat++;
@@ -180,15 +206,15 @@
         }
 
         //input作成
-        function input_make(key) {
+        function input_make() {
             input_num.setAttribute("type", "number");
             input_num.setAttribute("id", "point");
             input_button.setAttribute("value", "送信");
             input_button.setAttribute("type", "button");
             input_button.setAttribute("onclick", "getnum()");
             input_button.setAttribute("id", "decision");
-            var p = document.createElement("p");
-            var txt = document.createTextNode("倒した本数を入力してください.");
+            var txt = document.createTextNode("プレイヤー数を入力してください.");
+            p.appendChild(txt);
             form.appendChild(input_num);
             form.appendChild(input_button);
             result.appendChild(p);
@@ -200,7 +226,7 @@
             bingo_create(bingo, 0);
             kind = 1;
             button_remove();
-            input_make(0);
+            input_make();
             bingo_make();
             card.textContent = '普通のBINGOカード';
         });
@@ -220,7 +246,7 @@
             }
             bingo[12] = '●';
             button_remove();
-            input_make(1);
+            input_make();
             bingo_make();
             card.textContent = '倒した数のBINGOカード';
         });
@@ -230,7 +256,7 @@
             bingo_create(bingo, 1);
             kind = 2;
             button_remove();
-            input_make(0);
+            input_make();
             bingo_make();
             card.textContent = 'ボウリング調整のBINGO';
         });
