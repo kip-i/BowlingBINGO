@@ -15,111 +15,11 @@
         <p></p>
         <div id="pointboard"></div>
         <div id="buttons">
-            <button class="button" id="normal">普通のBINGO</button><br><br>
-            <button class="button" id="num">倒した数BINGO</button><br><br>
-            <button class="button" id="score">ボウリング調整のBINGO</button>
+            <button class="button" id="normal">倒した総本数BINGO</button><br><br>
+            <button class="button" id="score">倒した総本数調整BINGO</button><br><br>
+            <button class="button" id="num">倒した本数BINGO</button><br><br>
+
         </div>
-        <table border="2" width="708" bordercolor="#808080" height="83">
-            <tr>
-                <td align="center" width="82" bgcolor="#CCFFCC" height="22">
-                    <font size="1">フレーム</font>
-                </td>
-                <td align="center" colspan="2" width="58">1</td>
-                <td align="center" colspan="2" width="58" bgcolor="#CCFFCC" height="22">2</td>
-                <td align="center" colspan="2" width="58" bgcolor="#CCFFCC" height="22">3</td>
-                <td align="center" colspan="2" width="58" bgcolor="#CCFFCC" height="22">4</td>
-                <td align="center" colspan="2" width="58" bgcolor="#CCFFCC" height="22">5</td>
-                <td align="center" colspan="2" width="58" bgcolor="#CCFFCC" height="22">6</td>
-                <td align="center" colspan="2" width="58" bgcolor="#CCFFCC" height="22">7</td>
-                <td align="center" colspan="2" width="58" bgcolor="#CCFFCC" height="22">8</td>
-                <td align="center" colspan="2" width="58" bgcolor="#CCFFCC" height="22">9</td>
-                <td align="center" colspan="3" width="93" bgcolor="#CCFFCC" height="22">10</td>
-            </tr>
-            <tr>
-                <td align="center" rowspan="2" width="62" height="49">
-                    <font size="1">ゲーム</font>
-                </td>
-                <td align="center" width="16" height="31">
-                    <font size="5"><b>６</b></font>
-                </td>
-                <td align="center" width="24" height="31">
-                    <font size="5"><b>３</b></font>
-                </td>
-                <td align="center" width="26" height="31">
-                    <font size="5">９</font>
-                </td>
-                <td align="center" width="22" height="31">
-                    <font size="4"><b>－</b></font>
-                </td>
-                <td align="center" width="23" height="31">
-                    <font size="5"><b>Ｇ</b></font>
-                </td>
-                <td align="center" width="25" height="31">
-                    <font size="5"><b>３</b></font>
-                </td>
-                <td align="center" width="23" height="31">
-                    <font size="5"><b>８</b></font>
-                </td>
-                <td align="center" width="26" height="31">1</td>
-                <td align="center" width="25" height="31">
-                    <font size="5"><b>７</b></font>
-                </td>
-                <td align="center" width="25" height="31">1</td>
-                <td align="center" width="30" height="31">2</td>
-                <td align="center" width="22" height="31">2</td>
-                <td align="center" width="20" height="31">
-                    <font size="5">９</font>
-                </td>
-                <td align="center" width="26" height="31">6</td>
-                <td align="center" width="29" height="31">
-                    <font size="5"><b>⑧</b></font>
-                </td>
-                <td align="center" width="20" height="31">
-                    <font size="5"><b>Ｆ</b></font>
-                </td>
-                <td align="center" width="30" height="31">5</td>
-                <td align="center" width="23" height="31">6</td>
-                <td align="center" width="28" height="31">7</td>
-                <td align="center" width="25" height="31">
-                    <font size="5"><b>６</b></font>
-                </td>
-                <td align="center" width="28" height="31">7</td>
-            </tr>
-            <tr>
-                <td align="center" colspan="2" width="55" height="12">
-                    <font color="#0000FF" size="5"><b>9</b></font>
-                </td>
-                <td align="center" colspan="2" width="40" height="12">
-                    <font color="#0000FF" size="5"><b>18</b></font>
-                </td>
-                <td align="center" colspan="2" width="46" height="12">
-                    <p align="center">
-                        <font color="#0000FF" size="5"><b>21</b></font>
-                    </p>
-                </td>
-                <td align="center" colspan="2" width="41" height="12">
-                    <font color="#0000FF" size="5"><b>38</b></font>
-                </td>
-                <td align="center" colspan="2" width="56" height="12">
-                    <font color="#0000FF" size="5"><b>58</b></font>
-                </td>
-                <td align="center" colspan="2" width="58" height="12">
-                    <font color="#0000FF" size="5"><b>78</b></font>
-                </td>
-                <td align="center" colspan="2" width="52" height="12">
-                    <font color="#0000FF" size="5"><b>96</b></font>
-                </td>
-                <td align="center" colspan="2" width="55" height="12">
-                    <font color="#0000FF" size="5"><b>104</b></font>
-                </td>
-                <td align="center" colspan="2" width="55" height="12">
-                    <font color="#0000FF" size="5"><b>130</b></font>
-                </td>
-                <td align="center" colspan="3" width="93" height="12">
-                    <font color="#0000FF" size="5"><b>150</b></font>
-                </td>
-            </tr>
-        </table>
     </div>
     <script>
         //DOMの取得
@@ -139,9 +39,9 @@
         //BINGOの配列
         var i, j;
         var bingo = [];
-        var bingo_num;//作成時の数と１回目の倒したピンの数
+        var bingo_num;//１回目の倒したピンの数
         var kind; //BINGOの種類 num:0 normal:1 score:2
-        var repeat = 0; //プレイヤー数を入力したら1になる.その後投げた回数
+        var repeat = -1; //プレイヤー数を入力したら0になる.その後(投げた回数-1)
         var player_num; //プレイヤー数
         var scoreboard = [];//スコア用のボード
         //すでに出ているか確かめる関数
@@ -267,10 +167,13 @@
         }
         //ポイントボードの作成
         function pointboard_make() {
+            if (repeat !== -1) {
+                pointboard.removeChild(score_board);
+            }
             for (i = 0; i < player_num; i++) {
-                var row = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+                var row = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
                 scoreboard.push(row);
-                row = [11, 12, 13, 14, 15, 16, 17, 18, 19, 10];
+                row = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
                 scoreboard.push(row);
             }
             var tbl = document.createElement("table");
@@ -280,7 +183,9 @@
             var cellText = document.createTextNode("フレーム");
             cell.appendChild(cellText);
             row_top.appendChild(cell);
-            for (i = 0; i < 10; i++) {
+            var int = Math.floor(repeat / (player_num * 2));
+            for (i = 0; i < int + 1; i++) {
+                console.log(int);
                 cell = document.createElement("td");
                 cellText = document.createTextNode(i + 1);
                 cell.appendChild(cellText);
@@ -302,15 +207,16 @@
                 cell.appendChild(cellText);
                 cell.setAttribute("align", "center");
                 row_up.appendChild(cell);
-                for (j = 0; j < 21; j++) {
+                for (j = 0; j < ((int + 1) * 2); j++) {
                     cell = document.createElement("td");
                     cellText = document.createTextNode(scoreboard[2 * i][j]);
                     cell.appendChild(cellText);
+                    cell.setAttribute("align", "center");
                     row_up.appendChild(cell);
                 }
                 tblBody.appendChild(row_up);
                 var row = document.createElement("tr");
-                for (j = 0; j < 10; j++) {
+                for (j = 0; j < int + 1; j++) {
                     cell = document.createElement("td");
                     cellText = document.createTextNode(scoreboard[(2 * i) + 1][j]);
                     cell.appendChild(cellText);
@@ -332,7 +238,7 @@
         }
         //数字を入力されたとき
         function getnum() {
-            if (repeat === 0) {
+            if (repeat === -1) {
                 if (input_num.value < 1) {
                     p.innerHTML = '...つまんな.スコア表なしやるか?';
                     player_num = 1;
@@ -341,10 +247,9 @@
                     p.innerHTML = '倒した本数を入力してください.';
                     player_num = input_num.value;
                 }
-                pointboard_make();
             }
             else {
-                if (repeat % 2 == 0) {
+                if (repeat % 2 === 1) {
                     bingo_num = parseInt(bingo_num) + parseInt(input_num.value);
                     if (kind == 0) {
                         process_num();
@@ -360,8 +265,13 @@
                     else {
                         bingo_num = parseInt(bingo_num) + parseInt(input_num.value);
                     }
+
                 }
+                var int = Math.floor(repeat / 2);
+                var int_s = Math.floor(repeat / 6);
+                scoreboard[(int % 3) * 2][(repeat % 2) + ((int_s) * 2)] = input_num.value;
             }
+            pointboard_make();
             repeat++;
             input_num.value = null;
         }
