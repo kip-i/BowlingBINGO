@@ -217,6 +217,7 @@
                             var cell = document.createElement("td");
                             var cellText = document.createTextNode(bingo[j * 5 + i - 1]);
                             cell.appendChild(cellText);
+                            cell.setAttribute("align", "center");
                             row.appendChild(cell);
                         }
                     }
@@ -230,6 +231,7 @@
                         var cell = document.createElement("td");
                         var cellText = document.createTextNode(bingo[i * 5 + j]);
                         cell.appendChild(cellText);
+                        cell.setAttribute("align", "center");
                         row.appendChild(cell);
                     }
                     tblBody.appendChild(row);
@@ -288,6 +290,7 @@
                 else {
                     cell.setAttribute("colspan", "2");
                 }
+                cell.setAttribute("align", "center");
                 row_top.appendChild(cell);
             }
             tblBody.appendChild(row_top);
@@ -297,6 +300,7 @@
                 cellText = document.createTextNode("player" + (i + 1));
                 cell.setAttribute("rowspan", "2");
                 cell.appendChild(cellText);
+                cell.setAttribute("align", "center");
                 row_up.appendChild(cell);
                 for (j = 0; j < 21; j++) {
                     cell = document.createElement("td");
@@ -316,6 +320,7 @@
                     else {
                         cell.setAttribute("colspan", "2");
                     }
+                    cell.setAttribute("align", "center");
                     row.appendChild(cell);
                 }
                 tblBody.appendChild(row);
