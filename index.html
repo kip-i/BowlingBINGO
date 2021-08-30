@@ -148,7 +148,7 @@
             var number = repeat / 2;
             number = (number - 1) % 5;
             for (i = 0; i < 5; i++) {
-                if (bingo[i + 5 * number] === bingo_num) {
+                if (bingo[i + 5 * number] === bingo_score[int_t % player_num]) {
                     bingo[i + (5 * number)] = '●';
                 }
             }
@@ -158,8 +158,9 @@
         }
         //getnum()普通とボウリング調整BINGO
         function process_kt_ktb() {
+            var int_t = Math.floor(repeat / 2);
             for (i = 5; i < 30; i++) {
-                if (bingo[i] === bingo_num) {
+                if (bingo[i] === bingo_score[int_t % player_num]) {
                     bingo[i] = '●';
                 }
             }
@@ -257,7 +258,6 @@
             else {
                 var int_t = Math.floor(repeat / 2);
                 if (repeat % 2 === 1) {//2回目
-
                     bingo_score[int_t % player_num] = parseInt(bingo_score[int_t % player_num]) + parseInt(input_num.value);//前と今を足して今回のポイント
                     if (kind == 0) {
                         process_num();
@@ -267,7 +267,6 @@
                     }
                     var int_s = Math.floor(repeat / (player_num * 2));
                     scoreboard[repeat % (player_num * 2)][int_s] = parseInt(bingo_score[int_t % player_num]);//下段に代入
-                    console.log('2回目' + bingo_score);
                 }
                 else {//１回目
                     if (kind === 0) {
@@ -277,15 +276,10 @@
                         bingo_score[int_t % player_num] = parseInt(bingo_score[int_t % player_num]) + parseInt(input_num.value);
                     }
                     scoreboard[repeat % (player_num * 2)][int_s] = parseInt(input_num.value);
-                    //console.log('bingo_scoreの添字' + (int_t % player_num) + 'bingo_score' + bingo_score);
-                    console.log("1回目");
                 }
-                console.log('repeat' + repeat + 'bingo_scoreの添字' + (int_t % player_num) + 'bingo_score' + bingo_score);
                 var int_s = Math.floor(repeat / (player_num * 2));
                 scoreboard[(int_t % player_num) * 2][(repeat % 2) + ((int_s) * 2)] = parseInt(input_num.value);//scoreの上段に代入
-
             }
-            console.log('if後bingo_scoreの添字' + (int_t % player_num) + 'bingo_score' + bingo_score);
             pointboard_make();
             repeat++;
             input_num.value = null;
