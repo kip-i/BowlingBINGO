@@ -391,6 +391,9 @@
             bingo_make();
             card.textContent = '倒した総本数調整BINGOカード';
         });
+        window.addEventListener('beforeunload', function (e) {
+            e.returnValue = 'リロードしたら,データ消えるよ';
+        }, false);
     </script>
 </body>
 
