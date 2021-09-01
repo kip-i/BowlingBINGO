@@ -15,9 +15,55 @@
         <p></p>
         <div id="pointboard"></div>
         <div id="buttons">
-            <button class="button" id="knock_total">倒した総本数BINGO</button><br><br>
-            <button class="button" id="knock_total_balance">倒した総本数調整BINGO</button><br><br>
-            <button class="button" id="knock_down">倒した本数BINGO</button><br><br>
+            <details id="knock_total_d">
+                <summary><button class="button" id="knock_total">倒した総本数BINGO</button></summary>倒した総ピン数を有効にする.
+            </details><br><br>
+            <details id="knock_total_balance_d">
+                <summary><button class="button" id="knock_total_balance">倒した総本数調整BINGO</button></summary>
+                倒した総ピン数を有効にする.さらに,
+                <table border="1">
+                    <tr>
+                        <th>列</th>
+                        <th>B</th>
+                        <th>I</th>
+                        <th>N</th>
+                        <th>G</th>
+                        <th>O</th>
+                    </tr>
+                    <tr>
+                        <th>数値範囲</th>
+                        <th>1-12</th>
+                        <th>13-24</th>
+                        <th>25-36</th>
+                        <th>37-48</th>
+                        <th>49-60</th>
+                    </tr>
+                </table>
+            </details>
+            <br><br>
+            <details id="knock_down_d">
+                <summary><button class="button" id="knock_down">倒した本数BINGO</button></summary>
+                <table border="1">
+                    <tr>
+                        <th>列</th>
+                        <th>B</th>
+                        <th>I</th>
+                        <th>N</th>
+                        <th>G</th>
+                        <th>O</th>
+                    </tr>
+                    <tr>
+                        <th>フレーム</th>
+                        <th>1,6</th>
+                        <th>2,7</th>
+                        <th>3,8</th>
+                        <th>4,9</th>
+                        <th>5,10</th>
+                    </tr>
+                </table>
+                1フレーム毎に倒した本数で有効にする.
+            </details>
+            <br><br>
 
         </div>
     </div>
@@ -26,6 +72,9 @@
         var k_t = document.getElementById('knock_total');
         var k_d = document.getElementById('knock_down');
         var k_t_b = document.getElementById('knock_total_balance');
+        var k_t_d = document.getElementById('knock_total_d');
+        var k_d_d = document.getElementById('knock_down_d');
+        var k_t_b_d = document.getElementById('knock_total_balance_d');
         var buttons = document.getElementById('buttons');
         var result = document.getElementById('result');
         var form = document.createElement("form");
@@ -65,7 +114,7 @@
         }
         //乱数配列生成k_t:0,k_t_d:1
         function bingo_create(array, key) {
-            var divide = [15, 20];
+            var divide = [15, 12];
             for (i = 0; i < 5; i++) {
                 for (j = 0; j < 5; j++) {
                     bingo_num = Math.floor((Math.random() * 1000) % divide[key]) + 1 + j * divide[key];
@@ -80,9 +129,9 @@
         }
         //buttonの削除
         function button_remove() {
-            buttons.removeChild(k_t);
-            buttons.removeChild(k_t_b);
-            buttons.removeChild(k_d);
+            buttons.removeChild(k_t_d);
+            buttons.removeChild(k_t_b_d);
+            buttons.removeChild(k_d_d);
         }
         //BINGO表作成
         function bingo_make() {
@@ -146,6 +195,7 @@
         // getnum()倒した数BINGO
         function process_num() {
             var number = repeat / 2;
+            var int_t = Math.floor(repeat / 2);
             number = (number - 1) % 5;
             for (i = 0; i < 5; i++) {
                 if (bingo[i + 5 * number] === bingo_score[int_t % player_num]) {
@@ -244,7 +294,6 @@
         }
         //数字を入力されたとき
         function getnum() {
-            console.log('if前bingo_scoreの添字' + (int_t % player_num) + 'bingo_score' + bingo_score);
             if (repeat === -1) {
                 if (input_num.value < 1) {
                     p.innerHTML = '...つまんな.スコア表なしやるか?';
