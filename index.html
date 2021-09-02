@@ -40,10 +40,12 @@
                         <th>49-60</th>
                     </tr>
                 </table>
+                のように数値の範囲が異なる.
             </details>
             <br><br>
             <details id="knock_down_d">
                 <summary>&nbsp;<button class="button" id="knock_down">倒した本数BINGO</button></summary>
+                1フレーム毎に倒した本数で有効にする.
                 <table border="1">
                     <tr>
                         <th>列</th>
@@ -62,9 +64,25 @@
                         <th>5,10</th>
                     </tr>
                 </table>
-                1フレーム毎に倒した本数で有効にする.
+
             </details>
             <br><br>
+
+        </div>
+        <div class="tab">
+
+            <!-- 初期状態で表示されるコンテンツに対応するラジオボタンにはchecked="checkedを設定する -->
+            <input id="menu1" class="tab-input" name="menu" type="radio" checked="checked">
+            <label for="menu1" class="tab-item">タブ1</label>
+            <div class="tab-content">コンテンツ1</div>
+
+            <input id="menu2" class="tab-input" name="menu" type="radio">
+            <label for="menu2" class="tab-item">タブ2</label>
+            <div class="tab-content">コンテンツ2</div>
+
+            <input id="menu3" class="tab-input" name="menu" type="radio">
+            <label for="menu3" class="tab-item">タブ3</label>
+            <div class="tab-content">コンテンツ3</div>
 
         </div>
     </div>
@@ -391,10 +409,101 @@
             bingo_make();
             card.textContent = '倒した総本数調整BINGOカード';
         });
-        window.addEventListener('beforeunload', function (e) {
+        /*window.addEventListener('beforeunload', function (e) {
             e.returnValue = 'リロードしたら,データ消えるよ';
-        }, false);
+        }, false);*/
     </script>
 </body>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    /* ラジオボタンは非表示 */
+    input[type="radio"] {
+        display: none;
+    }
+
+    .tab {
+        width: 540px;
+        max-width: 100%;
+        /*margin: auto;*/
+        display: flex;
+        flex-flow: wrap;
+    }
+
+    .tab-item {
+        /*display: block;*/
+        width: calc(100% / 3);
+        text-align: center;
+        padding: 40px 0 20px;
+        cursor: pointer;
+        font-size: 200%;
+
+        /* タブメニューは一番上に表示する */
+        order: -1;
+
+        /* 下線以外をつける */
+        border-top: 1px solid red;
+        border-left: 1px solid red;
+        border-right: 1px solid red;
+    }
+
+    .tab-item:not(:first-of-type) {
+        border-left: none;
+    }
+
+    /* アクティブなタブの背景色と文字色を変える */
+    .tab-input:checked+.tab-item {
+        background: white;
+        color: red;
+        position: relative;
+        font-size: 200%;
+        vertical-align: bottom;
+
+    }
+
+
+
+
+    .tab-input:checked+.tab-item::before {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        content: '';
+        background: red;
+    }
+
+    .tab-input:checked+.tab-item::after {
+        position: absolute;
+        top: 32px;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        content: '';
+        background: red;
+    }
+
+
+
+
+    /* コンテンツは原則非表示 */
+    .tab-content {
+        width: 100%;
+        height: 200px;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+        border: 1px solid red;
+    }
+
+    /* ラジオボタンがチェックされているコンテンツだけは表示 */
+    .tab-input:checked+.tab-item+.tab-content {
+        display: flex;
+    }
+</style>
 
 </html>
