@@ -247,23 +247,28 @@
             if (game_num === 1) {
                 tab_in.setAttribute('checked', 'checked');
             }
-            result.appendChild(tab_in);
+            pointboard.appendChild(tab_in);
             var label = document.createElement('label');
             label.setAttribute('for', 'menu' + game_num);
             label.setAttribute('class', 'tab-item');
+            label.setAttribute('id', 'game_label' + game_num)
             label.textContent = 'ゲーム' + game_num;
-            result.appendChild(label);
+            pointboard.appendChild(label);
             var tab_con = document.createElement('div');
-            tab_con.appendChild('class', 'tab-content');
-            tab_con.appendChild('id', 'content' + game_num);
-            result.appendChild(tab_con);
-
-
+            tab_con.setAttribute('class', 'tab-content');
+            tab_con.setAttribute('id', 'content' + game_num);
+            pointboard.appendChild(tab_con);
+            for (var i = 0; i < game_num; i++) {
+                var label_style = document.getElementById('game_label' + game_num);
+                label_style.style.width = 'calc(100%/' + game_num + ')';
+            }
         }
         //ポイントボードの作成
         function pointboard_make() {
+            var tab_content = document.getElementById('content' + game_num);
             if (repeat !== -1) {
-                pointboard.removeChild(score_board);
+
+                tab_content.removeChild(score_board);
             }
             else {
                 for (i = 0; i < player_num; i++) {
@@ -333,7 +338,7 @@
             tbl.appendChild(tblBody);
             tbl.setAttribute("border", "1");
             tbl.setAttribute("id", "score_board");
-            pointboard.appendChild(tbl);
+            tab_content.appendChild(tbl);
         }
         //数字を入力されたとき
         function getnum() {
@@ -346,6 +351,7 @@
                     p.innerHTML = '倒した本数を入力してください.';
                     player_num = input_num.value;
                 }
+                tab_make();
             }
             else {
                 var int_t = Math.floor(repeat / 2);
@@ -374,7 +380,7 @@
             }
             pointboard_make();
             repeat++;
-            input_num.value = null;
+            //input_num.value = null;
         }
 
         //input作成
@@ -402,7 +408,7 @@
             input_make();
             bingo_make();
             card.textContent = '倒した総本数BINGOカード';
-            tab_make();
+
         });
         //knock_down イベントのバインド
         k_d.addEventListener('click', function () {
@@ -423,7 +429,7 @@
             input_make();
             bingo_make();
             card.textContent = '倒した本数BINGOカード';
-            tab_make();
+
         });
         //knock_total_balance イベントのバインド
         k_t_b.addEventListener('click', function () {
@@ -434,7 +440,7 @@
             input_make();
             bingo_make();
             card.textContent = '倒した総本数調整BINGOカード';
-            tab_make();
+
         });
         /*window.addEventListener('beforeunload', function (e) {
             e.returnValue = 'リロードしたら,データ消えるよ';
@@ -461,7 +467,7 @@
 
     .tab-item {
         /*display: block;*/
-        width: calc(100% / 3);
+        /*width: calc(100% / 3);*/
         text-align: center;
         padding: 40px 0 20px;
         cursor: pointer;
@@ -513,11 +519,11 @@
     /* コンテンツは原則非表示 */
     .tab-content {
         width: 100%;
-        height: 200px;
+        /*height: 200px;*/
         display: none;
         justify-content: center;
         align-items: center;
-        font-size: 40px;
+        /*font-size: 40px;*/
         border: 1px solid red;
     }
 
