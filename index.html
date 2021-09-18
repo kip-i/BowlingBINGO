@@ -13,7 +13,7 @@
         <h4 id="card">BINGOカード</h4>
         <div id="result"></div>
         <p></p>
-        <div id="pointboard"></div>
+        <div id="pointboard" class="tab"></div>
         <div id="buttons">
             <details id="knock_total_d">
                 <summary> &nbsp;<button class="button" id="knock_total">倒した総本数BINGO</button></summary>
@@ -69,10 +69,10 @@
             <br><br>
 
         </div>
-        <div class="tab">
+        <!--<div class="tab">-->
 
-            <!-- 初期状態で表示されるコンテンツに対応するラジオボタンにはchecked="checkedを設定する -->
-            <input id="menu1" class="tab-input" name="menu" type="radio" checked="checked">
+        <!-- 初期状態で表示されるコンテンツに対応するラジオボタンにはchecked="checkedを設定する -->
+        <!--<input id="menu1" class="tab-input" name="menu" type="radio" checked="checked">
             <label for="menu1" class="tab-item">タブ1</label>
             <div class="tab-content">コンテンツ1</div>
 
@@ -84,7 +84,7 @@
             <label for="menu3" class="tab-item">タブ3</label>
             <div class="tab-content">コンテンツ3</div>
 
-        </div>
+        </div>-->
     </div>
     <script>
         //DOMの取得
@@ -112,6 +112,7 @@
         var kind; //BINGOの種類 k_d:0 k_t:1 k_t_b:2
         var repeat = -1; //プレイヤー数を入力したら0になる.その後(投げた回数-1)
         var player_num; //プレイヤー数
+        var game_num = 1; //ゲーム数
         var scoreboard = [];//スコア用のボード
         //すでに出ているか確かめる関数
         function match(num, bingo) {
@@ -235,6 +236,29 @@
             }
             result.removeChild(bingo_table);
             bingo_make();
+        }
+        //タブの作成
+        function tab_make() {
+            var tab_in = document.createElement('input');
+            tab_in.setAttribute('id', 'game' + game_num);
+            tab_in.setAttribute('class', 'tab-input');
+            tab_in.setAttribute('name', 'menu');
+            tab_in.setAttribute('type', 'radio');
+            if (game_num === 1) {
+                tab_in.setAttribute('checked', 'checked');
+            }
+            result.appendChild(tab_in);
+            var label = document.createElement('label');
+            label.setAttribute('for', 'menu' + game_num);
+            label.setAttribute('class', 'tab-item');
+            label.textContent = 'ゲーム' + game_num;
+            result.appendChild(label);
+            var tab_con = document.createElement('div');
+            tab_con.appendChild('class', 'tab-content');
+            tab_con.appendChild('id', 'content' + game_num);
+            result.appendChild(tab_con);
+
+
         }
         //ポイントボードの作成
         function pointboard_make() {
@@ -378,6 +402,7 @@
             input_make();
             bingo_make();
             card.textContent = '倒した総本数BINGOカード';
+            tab_make();
         });
         //knock_down イベントのバインド
         k_d.addEventListener('click', function () {
@@ -398,6 +423,7 @@
             input_make();
             bingo_make();
             card.textContent = '倒した本数BINGOカード';
+            tab_make();
         });
         //knock_total_balance イベントのバインド
         k_t_b.addEventListener('click', function () {
@@ -408,6 +434,7 @@
             input_make();
             bingo_make();
             card.textContent = '倒した総本数調整BINGOカード';
+            tab_make();
         });
         /*window.addEventListener('beforeunload', function (e) {
             e.returnValue = 'リロードしたら,データ消えるよ';
@@ -463,9 +490,6 @@
 
     }
 
-
-
-
     .tab-input:checked+.tab-item::before {
         position: absolute;
         top: 20px;
@@ -485,9 +509,6 @@
         content: '';
         background: red;
     }
-
-
-
 
     /* コンテンツは原則非表示 */
     .tab-content {
